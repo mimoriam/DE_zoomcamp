@@ -1,0 +1,6 @@
+docker build -t test_pandas_app .
+
+docker run -it --rm --name run_test_pandas test_pandas_app 2022-14-8
+    > Output:
+        ['pipeline.py', '2022-14-8']
+        Pandas imported successfully for 2022-14-8!
