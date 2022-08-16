@@ -4,3 +4,22 @@ docker run -it --rm --name run_test_pandas test_pandas_app 2022-14-8
     > Output:
         ['pipeline.py', '2022-14-8']
         Pandas imported successfully for 2022-14-8!
+
+
+docker run -it \
+        -e POSTGRES_USER="root" \
+        -e POSTGRES_PASSWORD="root" \
+        -e POSTGRES_DB="ny_taxi" \
+        -v c:/Users/Mimo/PycharmProjects/DE_zoomcamp/week_1/1_docker_sql/ny_taxi_postgres_data_volume:/var/lib/postgresql/data \
+        -p 5432:5432 \
+        postgres:14.5
+
+
+# To connect to Postgres instance inside Docker, we need pgcli
+    pip install pgcli
+
+pgcli -h localhost -p 5432 -u root -d ny_taxi
+
+# We also need jupyter notebooks to read the data so:
+    pip install jupyter
+    jupyter notebook
