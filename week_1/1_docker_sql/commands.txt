@@ -16,10 +16,18 @@ docker run -it \
 
 
 # To connect to Postgres instance inside Docker, we need pgcli
-    pip install pgcli
+    pip install pgcli, sqlalchemy
 
 pgcli -h localhost -p 5432 -u root -d ny_taxi
 
 # We also need jupyter notebooks to read the data so:
+    pip install pandas
     pip install jupyter
     jupyter notebook
+
+
+# After downloading and converting the parquet file to csv, since it's too large,
+# we'll pipe the output of a 100 rows/columns to a new file to look easily
+# kinda like pandas df.head(100):
+
+head -n 100 yellow_tripdata_2021-01.csv > tripdata_100.csv
