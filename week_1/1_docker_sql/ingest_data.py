@@ -1,6 +1,18 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+"""
+URL="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet"
+python ingest_data.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=${URL}
+"""
+
 import os
 import argparse
 
@@ -18,9 +30,18 @@ def main(params):
     db = params.db
     table_name = params.table_name
     url = params.url
+    parquet_name = 'downloaded.parquet'
     csv_name = 'output.csv'
 
-    os.system(f"wget {url} -O {csv_name}")
+    os.system(f"wget {url} -O {parquet_name}")
+
+    df = pd.read_parquet(f"{parquet_name}")
+
+    print("Converting parquet file to csv...")
+    df.to_csv(f"{csv_name}")
+
+    print("Conversion to csv complete!")
+    print("Creating tables in Postgresql...")
 
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
 
